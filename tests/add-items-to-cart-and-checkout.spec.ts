@@ -16,17 +16,22 @@ test('User can successfully add items to cart and check out', async ({ page }) =
   await page.locator('#signInBtn').click();
   await expect(page).toHaveTitle('ProtoCommerce');
 
-
+  //Find first item on the page (iPhone X) and add it to your cart
   await expect(iphoneCard).toHaveCount(1);
   await iphoneCard.getByRole('button', { name: 'Add' }).click();
+  //Visit cart and verify the correct item has been added
   await page.getByText('Checkout ( 1 )').click();
   await expect(page.getByText('In Stock')).toBeVisible();
   await expect(page.locator('tr').filter({hasText: 'Total ₹.'})).toBeVisible();
+  //Checkout
   await page.getByRole('button', { name: 'Checkout' }).click();
   await expect(page.getByText('Please choose your delivery location.')).toBeVisible();
+  //Add delivery address
   await page.locator('#country').fill('Oxford, United Kingdom');
+  //Check terms and conditions checkbox
   await page.getByText(/term & Conditions/i).click();
   await page.getByText('Close').click();
+  //Confirm purchase
   await page.getByRole('button', { name: 'Purchase' }).click();
   await expect(page.getByText('Success! Thank you! Your order will be delivered in next few weeks :-).')).toBeVisible();
 });
