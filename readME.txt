@@ -7,7 +7,7 @@ This repository showcases ongoing Playwright automation work, complementing auto
 - Locator strategies
 - Form interaction
 - Assertions
-- Basic end-to-end testing
+- End-to-end testing
 
 ## Tools used
 - Playwright
