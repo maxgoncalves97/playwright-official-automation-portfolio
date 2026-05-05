@@ -2,7 +2,6 @@ import { expect, Locator, Page } from "@playwright/test";
 
 export class CheckoutCart {
     page: Page;
-    iphoneCard: Locator;
     checkoutPage: Locator;
     iphoneInStock: Locator;
     checkoutTotal: Locator;
@@ -14,12 +13,8 @@ export class CheckoutCart {
     purchaseButton: Locator;
     successMessage: Locator;
 
-
     constructor(page: Page) {
         this.page = page;
-        this.iphoneCard = page.locator('app-card').filter({
-            has: page.getByText('iphone X', { exact: true })
-        });
         this.checkoutPage = page.locator('a.nav-link.btn.btn-primary', { hasText: 'Checkout' });
         this.iphoneInStock = page.getByText('In Stock');
         this.checkoutTotal = page.locator('tr').filter({ hasText: 'Total ₹.' }).locator('strong');
@@ -36,9 +31,23 @@ export class CheckoutCart {
         await this.page.goto('https://rahulshettyacademy.com/angularpractice/shop');
     }
 
-    async checkout(total: string, location: string) {
+    async addProductToCart(productName: string) {
+        const productCard = this.page.locator('app-card').filter({
+            has: this.page.getByText(productName, { exact: true }),
+        });
+
+        await productCard.getByRole('button', { name: 'Add' }).click();
+    }
+
+    async gotoCheckout() {
         await this.checkoutPage.click();
+    }
+
+    async totalPrice(total: string) {
         await expect(this.checkoutTotal).toHaveText(total);
+    }
+
+    async checkout(location: string) {
         await this.checkoutButton.click();
         await this.deliveryLocation.fill(location);
         await this.checkoutTCLabel.click();
@@ -49,5 +58,13 @@ export class CheckoutCart {
 
     async checkoutSuccess() {
         await expect(this.successMessage).toBeVisible();
+    }
+
+    async removeProduct(productName: string) {
+        await this.page
+            .locator('tr')
+            .filter({ hasText: productName })
+            .getByRole('button', { name: 'Remove' })
+            .click();
     }
 }
