@@ -5,7 +5,7 @@ test('Go to login page and login as a normal user', async ({ page }) => {
   const loginPage = new LoginPagePractise(page);
 
   await loginPage.gotoLogin();
-  await loginPage.loginUser('rahulshettyacademy', 'Learning@830$3mK2', 'consult');
+  await loginPage.loginUser(process.env.TEST_USERNAME!, process.env.TEST_PASSWORD!, 'consult');
   await loginPage.verifyLoginSuccess();
 });
 
@@ -13,7 +13,7 @@ test('Go to login page and login as an admin user', async ({ page }) => {
   const loginPage = new LoginPagePractise(page);
 
   await loginPage.gotoLogin();
-  await loginPage.loginAdmin('rahulshettyacademy', 'Learning@830$3mK2', 'consult');
+  await loginPage.loginAdmin(process.env.TEST_USERNAME!, process.env.TEST_PASSWORD!, 'consult');
   await loginPage.verifyLoginSuccess();
 });
 
@@ -21,7 +21,7 @@ test('Go to login page and login as a normal user who is a Consultant', async ({
   const loginPage = new LoginPagePractise(page);
 
   await loginPage.gotoLogin();
-  await loginPage.loginUser('rahulshettyacademy', 'Learning@830$3mK2', 'consult');
+  await loginPage.loginUser(process.env.TEST_USERNAME!, process.env.TEST_PASSWORD!, 'consult');
   await loginPage.verifyLoginSuccess();
 });
 
@@ -29,7 +29,7 @@ test('Go to login page and login as a normal user who is a Student', async ({ pa
   const loginPage = new LoginPagePractise(page);
 
   await loginPage.gotoLogin();
-  await loginPage.loginUser('rahulshettyacademy', 'Learning@830$3mK2', 'stud');
+  await loginPage.loginUser(process.env.TEST_USERNAME!, process.env.TEST_PASSWORD!, 'stud');
   await loginPage.verifyLoginSuccess();
 });
 
@@ -37,6 +37,6 @@ test('Go to login page and login as a normal user who is a Teacher', async ({ pa
   const loginPage = new LoginPagePractise(page);
 
   await loginPage.gotoLogin();
-  await loginPage.loginUser('rahulshettyacademy', 'Learning@830$3mK2', 'teach');
+  await loginPage.loginUser(process.env.TEST_USERNAME!, process.env.TEST_PASSWORD!, 'teach');
   await loginPage.verifyLoginSuccess();
 });
