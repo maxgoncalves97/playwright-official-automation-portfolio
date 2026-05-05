@@ -25,8 +25,20 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
 
-    - name: Run Playwright tests
-      run: npx playwright test
+    - name: Run valid login tests
+      run: npx playwright test tests/valid-login.spec.ts
+      env:
+        TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
+        TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
+
+    - name: Run invalid login tests
+      run: npx playwright test tests/invalid-login.spec.ts
+      env:
+        TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
+        TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
+
+    - name: Run cart checkout tests
+      run: npx playwright test tests/add-items-to-cart-and-checkout.spec.ts
       env:
         TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
         TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
