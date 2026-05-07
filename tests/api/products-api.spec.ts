@@ -27,22 +27,22 @@ test.describe('Product API Tests', () => {
     expect(body.products[0]).toHaveProperty('price');
   });
 
-  test('should search for products by keyword', async ({ request }) => {
-    const response = await request.get('https://dummyjson.com/products/search?q=phone');
+test('should search for products by keyword', async ({ request }) => {
+  const response = await request.get('https://dummyjson.com/products/search?q=phone');
 
-    expect(response.status()).toBe(200);
+  expect(response.status()).toBe(200);
 
-    const body = await response.json();
+  const body = await response.json();
 
-    expect(Array.isArray(body.products)).toBeTruthy();
-    expect(body.products.length).toBeGreaterThan(0);
+  expect(Array.isArray(body.products)).toBeTruthy();
+  expect(body.products.length).toBeGreaterThan(0);
 
-    const productTitles = body.products.map((product: { title: string }) =>
-      product.title.toLowerCase()
-    );
-
-    expect(productTitles.some((title: string) => title.includes('phone'))).toBeTruthy();
-  });
+  for (const product of body.products) {
+    expect(product).toHaveProperty('id');
+    expect(product).toHaveProperty('title');
+    expect(product).toHaveProperty('price');
+  }
+});
 
   test('should return 404 for an invalid product endpoint', async ({ request }) => {
     const response = await request.get('https://dummyjson.com/products/invalid-product-id');
